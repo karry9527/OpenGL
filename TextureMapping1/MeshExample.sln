@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshExample", "MeshExample\MeshExample.vcxproj", "{53018E2A-09C2-4E5E-A4ED-96399BE391C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureMapping", "TextureMapping\TextureMapping.vcxproj", "{9C1F719A-455B-43B7-BAF4-E8F5A6D3EBF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53018E2A-09C2-4E5E-A4ED-96399BE391C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{53018E2A-09C2-4E5E-A4ED-96399BE391C2}.Debug|Win32.Build.0 = Debug|Win32
+		{53018E2A-09C2-4E5E-A4ED-96399BE391C2}.Release|Win32.ActiveCfg = Release|Win32
+		{53018E2A-09C2-4E5E-A4ED-96399BE391C2}.Release|Win32.Build.0 = Release|Win32
+		{9C1F719A-455B-43B7-BAF4-E8F5A6D3EBF3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9C1F719A-455B-43B7-BAF4-E8F5A6D3EBF3}.Debug|Win32.Build.0 = Debug|Win32
+		{9C1F719A-455B-43B7-BAF4-E8F5A6D3EBF3}.Release|Win32.ActiveCfg = Release|Win32
+		{9C1F719A-455B-43B7-BAF4-E8F5A6D3EBF3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
