@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 	
 	glutInitWindowPosition(0, 0);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutCreateWindow("Mesh Example");
+	glutCreateWindow("Texture");
 
 	glewInit();
 	texObject = new GLuint[scene1->texObjectNum];
@@ -214,9 +214,13 @@ void LoadTexture(char* pFilename, int iIndex)
 	glBindTexture(GL_TEXTURE_2D, texObject[iIndex]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                     GL_REPEAT );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                     GL_REPEAT );
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, iWidth, iHeight,
 		0, GL_BGRA, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(p32BitsImage));
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	FreeImage_Unload(p32BitsImage);
 	FreeImage_Unload(pImage);
@@ -253,23 +257,61 @@ void setTex()
 		{
 			cout << scene1->texObjectName[j].type << ":";
 			type = scene1->object_scene[i].type;
-			float params1[] = {1.0 , 0.0 , 0.0 ,0.0};
-			float params2[] = {0.0 , 1.0 , 0.0 ,0.0};
-			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-			glTexGenfv(GL_S , GL_OBJECT_PLANE , params1);
-			glTexGenfv(GL_T , GL_OBJECT_PLANE , params2);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
-			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-			glEnable(GL_TEXTURE_GEN_S);
-			glEnable(GL_TEXTURE_GEN_T);
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, 0.5f);
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, texObject[k]);
-			glDisable(GL_CULL_FACE);
+			if(!strcmp(scene1->texObjectName[j].texName, "Room.bmp"))
+			{
+				/*glEnable(GL_TEXTURE_2D);
+				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.5f);
+				glBindTexture(GL_TEXTURE_2D, texObject[k]);
+				glDisable(GL_CULL_FACE);*/
+				/*glBegin(GL_QUADS);
+				glTexCoord2f( 0.0, 0.0 ); 
+				glVertex3f( -1.0, -1.0, 1.0 );
+				glTexCoord2f( 1.0, 0.0 ); 
+				glVertex3f( 1.0, -1.0, 1.0 );
+				glTexCoord2f( 1.0, 1.0 ); 
+				glVertex3f( 1.0, 1.0, 1.0 );
+				glTexCoord2f( 0.0, 1.0 ); 
+				glVertex3f( -1.0, 1.0, 1.0 );
+				glEnd();
+				glFlush();*/
+				glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
+				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
+				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+				glEnable(GL_TEXTURE_GEN_S);
+				glEnable(GL_TEXTURE_GEN_T);
+				glEnable(GL_TEXTURE_2D);
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.5f);
+
+
+				glBindTexture(GL_TEXTURE_2D, texObject[k]);
+
+
+			}
+			else
+			{
+				float params1[] = {1.0 , 0.0 , 0.0 ,0.0};
+				float params2[] = {0.0 , 1.0 , 0.0 ,0.0};
+				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+				glTexGenfv(GL_S , GL_OBJECT_PLANE , params1);
+				glTexGenfv(GL_T , GL_OBJECT_PLANE , params2);
+				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+				//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
+				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+				glEnable(GL_TEXTURE_GEN_S);
+				glEnable(GL_TEXTURE_GEN_T);
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.5f);
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, texObject[k]);
+				glDisable(GL_CULL_FACE);
+			}
+			
 			
 			for(int x = i; x < scene1->objectNumMax; x++, i++)
 			{
@@ -301,6 +343,7 @@ void setTex()
 			glDisable(GL_TEXTURE_GEN_T);
 			glDisable(GL_TEXTURE_2D);
 			glDisable(GL_ALPHA_TEST);
+
 			k++;
 		}
 		else if(!strcmp(scene1->texObjectName[j].type, "multi-texture"))

@@ -49,16 +49,23 @@ int main(int argc, char** argv)
 	
 	glutInitWindowPosition(0, 0);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutCreateWindow("Mesh Example");
+	glutCreateWindow("Texture");
 
 	glewInit();
 	texObject = new GLuint[scene1->texObjectNum];
 	glGenTextures(scene1->texObjectNum, texObject);
+	
+	FreeImage_Initialise();
 
 	int temp = 0;
 	for(int i = 0; i < scene1->texObjectNum; i++)
 	{
-		if(!strcmp(scene1->texObjectName[temp].type, "single-texture"))
+		if(!strcmp(scene1->texObjectName[temp].type, "no-texture"))
+		{
+			cout << "nan:" << scene1->texObjectName[temp].texName << endl;
+			temp++;
+		}
+		else if(!strcmp(scene1->texObjectName[temp].type, "single-texture"))
 		{
 			LoadTexture(scene1->texObjectName[temp].texName, i);
 			cout << i << ":" << scene1->texObjectName[temp].texName << endl;
@@ -91,6 +98,7 @@ int main(int argc, char** argv)
 		}
 
 	}
+	FreeImage_DeInitialise();
 	
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
@@ -239,6 +247,7 @@ void setTex()
 					break;
 			}
 			cout << endl;
+			k++;
 		}
 		else if(!strcmp(scene1->texObjectName[j].type, "single-texture"))
 		{
@@ -288,10 +297,10 @@ void setTex()
 				glTexCoord2f(0.0, 1.0);
 				glVertex3f(50.0, 0.0, 0.0);
 			glEnd();*/
-			//glDisable(GL_TEXTURE_GEN_S);
-			//glDisable(GL_TEXTURE_GEN_T);
-			//glDisable(GL_TEXTURE_2D);
-			//glDisable(GL_ALPHA_TEST);
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_ALPHA_TEST);
 			k++;
 		}
 		else if(!strcmp(scene1->texObjectName[j].type, "multi-texture"))
@@ -311,7 +320,23 @@ void setTex()
 			glBindTexture(GL_TEXTURE_2D, texObject[k+1]);
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
 			glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE );
-			
+			/*glBegin(GL_QUADS);
+				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 0.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 0.0);
+				glVertex3f(-1.0, -1.0, 0.0);
+	
+				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 0.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 0.0);
+				glVertex3f(1.0, -1.0, 0.0);
+	
+				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 100.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 3.0);
+				glVertex3f(1.0, 1.0, 0.0);
+	
+				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 100.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 3.0);
+				glVertex3f(-1.0, 1.0, 0.0);*/
+			glEnd();
 			for(int x = i; x < scene1->objectNumMax; x++, i++)
 			{
 				if(scene1->object_scene[x].type == type)
@@ -328,23 +353,7 @@ void setTex()
 					break;
 			}
 			cout << endl;
-			/*glBegin(GL_QUADS);
-				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 0.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 0.0);
-				glVertex3f(-1.0, -1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 1.0, 0.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 0.0);
-				glVertex3f(1.0, -1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 1.0, 1.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 3.0);
-				glVertex3f(1.0, 1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 1.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 3.0);
-				glVertex3f(-1.0, 1.0, 0.0);
-			glEnd();*/
+			
 
 			//unbind texture 1
 			glActiveTexture(GL_TEXTURE1);
@@ -356,7 +365,7 @@ void setTex()
 			glDisable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
-			//glFlush();
+			glFlush();
 			k += 2;
 			j++;
 		}
@@ -389,9 +398,9 @@ void setTex()
 					break;
 			}
 			cout << endl;
-			//glDisable(GL_TEXTURE_GEN_S);
-			//glDisable(GL_TEXTURE_GEN_T);
-			//glDisable(GL_TEXTURE_GEN_R);
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+			glDisable(GL_TEXTURE_GEN_R);
 			glDisable(GL_TEXTURE_CUBE_MAP);
 			k += 6;
 			j += 5;
@@ -514,5 +523,9 @@ void reshape(GLsizei w, GLsizei h)
 {
 	windowSize[0] = w;
 	windowSize[1] = h;
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
