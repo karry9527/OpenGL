@@ -265,18 +265,8 @@ void setTex()
 				glAlphaFunc(GL_GREATER, 0.5f);
 				glBindTexture(GL_TEXTURE_2D, texObject[k]);
 				glDisable(GL_CULL_FACE);*/
-				/*glBegin(GL_QUADS);
-				glTexCoord2f( 0.0, 0.0 ); 
-				glVertex3f( -1.0, -1.0, 1.0 );
-				glTexCoord2f( 1.0, 0.0 ); 
-				glVertex3f( 1.0, -1.0, 1.0 );
-				glTexCoord2f( 1.0, 1.0 ); 
-				glVertex3f( 1.0, 1.0, 1.0 );
-				glTexCoord2f( 0.0, 1.0 ); 
-				glVertex3f( -1.0, 1.0, 1.0 );
-				glEnd();
-				glFlush();*/
-				glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+				
+				//glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
 				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -286,9 +276,19 @@ void setTex()
 				glEnable(GL_ALPHA_TEST);
 				glAlphaFunc(GL_GREATER, 0.5f);
 
-
+				
 				glBindTexture(GL_TEXTURE_2D, texObject[k]);
-
+				/*glBegin(GL_QUADS);
+				glTexCoord2f( 0.0, 0.0 ); 
+				glVertex3f( -5.0f,  1.0f, -5.0f );
+				glTexCoord2f( 1.0, 0.0 ); 
+				glVertex3f( -5.0f,  1.0f,  5.0f );
+				glTexCoord2f( 1.0, 1.0 ); 
+				glVertex3f( 5.0f,  1.0f,  5.0f );
+				glTexCoord2f( 0.0, 1.0 ); 
+				glVertex3f( 5.0f,  1.0f, -5.0f );
+				glEnd();
+				glFlush();*/
 
 			}
 			else
@@ -352,33 +352,60 @@ void setTex()
 			type = scene1->object_scene[i].type;
 			//bind texture 0
 			glActiveTexture(GL_TEXTURE0);
+
+			/*float params1[] = {1.0 , 0.0 , 0.0 ,0.0};
+			float params2[] = {0.0 , 1.0 , 0.0 ,0.0};
+			//float params3[] = {0.0 , 0.0 , 0.01 ,0.0};
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			//glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			glTexGenfv(GL_S , GL_OBJECT_PLANE , params1);
+			glTexGenfv(GL_T , GL_OBJECT_PLANE , params2);
+			//glTexGenfv(GL_R , GL_OBJECT_PLANE , params3);
+			glEnable(GL_TEXTURE_GEN_S);
+			glEnable(GL_TEXTURE_GEN_T);
+			//glEnable(GL_TEXTURE_GEN_R);*/
+
+
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texObject[k]);
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
 			glTexEnvf (GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE );
 
+
 			//bind texture 1
 			glActiveTexture(GL_TEXTURE1);
+
+			/*glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			//glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+			glTexGenfv(GL_S , GL_OBJECT_PLANE , params1);
+			glTexGenfv(GL_T , GL_OBJECT_PLANE , params2);
+			//glTexGenfv(GL_R , GL_OBJECT_PLANE , params3);
+			glEnable(GL_TEXTURE_GEN_S);
+			glEnable(GL_TEXTURE_GEN_T);
+			//glEnable(GL_TEXTURE_GEN_R);*/
+
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texObject[k+1]);
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
 			glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE );
-			/*glBegin(GL_QUADS);
+			glBegin(GL_QUADS);
 				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 0.0);
 				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 0.0);
-				glVertex3f(-1.0, -1.0, 0.0);
+				glVertex3f(-5.0f,  1.0f, -5.0f);
 	
-				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 0.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 0.0);
-				glVertex3f(1.0, -1.0, 0.0);
+				glMultiTexCoord2f(GL_TEXTURE0, 1.0, 0.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 1.0, 0.0);
+				glVertex3f(-5.0f,  1.0f,  5.0f);
 	
-				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 100.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 3.0);
-				glVertex3f(1.0, 1.0, 0.0);
+				glMultiTexCoord2f(GL_TEXTURE0, 1.0, 1.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 1.0, 1.0);
+				glVertex3f( 5.0f,  1.0f,  5.0f);
 	
-				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 100.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 3.0);
-				glVertex3f(-1.0, 1.0, 0.0);*/
+				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 1.0);
+				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 1.0);
+				glVertex3f(5.0f,  1.0f, -5.0f);
 			glEnd();
 			for(int x = i; x < scene1->objectNumMax; x++, i++)
 			{
@@ -401,11 +428,17 @@ void setTex()
 			//unbind texture 1
 			glActiveTexture(GL_TEXTURE1);
 			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+			glDisable(GL_TEXTURE_GEN_R);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			//unbind texture 0
 			glActiveTexture(GL_TEXTURE0);
 			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_TEXTURE_GEN_S);
+			glDisable(GL_TEXTURE_GEN_T);
+			glDisable(GL_TEXTURE_GEN_R);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			glFlush();
