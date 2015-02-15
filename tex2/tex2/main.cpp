@@ -135,6 +135,7 @@ void material(int num)
 		for (size_t j=0;j<3;++j)
 		{
 			//textex corrd. object->tList[object->faceList[i][j].t].ptr
+			glTexCoord2fv(object[num].tList[object[num].faceList[i][j].t].ptr);
 			glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
 			glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);	
 		}
@@ -267,28 +268,17 @@ void setTex()
 				glDisable(GL_CULL_FACE);*/
 				
 				//glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
+				/*glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
 				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP); 
 				//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 				glEnable(GL_TEXTURE_GEN_S);
-				glEnable(GL_TEXTURE_GEN_T);
+				glEnable(GL_TEXTURE_GEN_T);*/
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_ALPHA_TEST);
 				glAlphaFunc(GL_GREATER, 0.5f);
 
 				
 				glBindTexture(GL_TEXTURE_2D, texObject[k]);
-				/*glBegin(GL_QUADS);
-				glTexCoord2f( 0.0, 0.0 ); 
-				glVertex3f( -5.0f,  1.0f, -5.0f );
-				glTexCoord2f( 1.0, 0.0 ); 
-				glVertex3f( -5.0f,  1.0f,  5.0f );
-				glTexCoord2f( 1.0, 1.0 ); 
-				glVertex3f( 5.0f,  1.0f,  5.0f );
-				glTexCoord2f( 0.0, 1.0 ); 
-				glVertex3f( 5.0f,  1.0f, -5.0f );
-				glEnd();
-				glFlush();*/
 
 			}
 			else
