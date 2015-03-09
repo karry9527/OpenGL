@@ -23,7 +23,7 @@ bool mouse_left = false;
 int windowSize[2];
 int mouseOriginx, mouseOriginy, movex, movey, objectNum = 0;
 
-void material(int num);
+void material(int num, int type);
 void drag(int x, int y);
 void LoadCubeTexture(char* pFilename1, char* pFilename2, char* pFilename3, char* pFilename4, char* pFilename5, char* pFilename6, int iIndex);
 void LoadTexture(char* pFilename, int iIndex);
@@ -110,7 +110,7 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-void material(int num)
+void material(int num, int type)
 {
 	//§Ë¦¨func
 	int lastMaterial = -1;
@@ -135,8 +135,31 @@ void material(int num)
 		for (size_t j=0;j<3;++j)
 		{
 			//textex corrd. object->tList[object->faceList[i][j].t].ptr
-			glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
-			glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);	
+			switch(type)
+			{
+			case 0:
+				glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
+				glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);
+				break;
+
+			case 1:
+				glTexCoord2fv(object[num].tList[object[num].faceList[i][j].t].ptr);
+				glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
+				glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);
+				break;
+			case 2:
+				glTexCoord2fv(object[num].tList[object[num].faceList[i][j].t].ptr);
+				glMultiTexCoord2f(GL_TEXTURE0, object[num].tList[object[num].faceList[i][j].t].ptr[0], object[num].tList[object[num].faceList[i][j].t].ptr[1]);
+				glMultiTexCoord2f(GL_TEXTURE1, object[num].tList[object[num].faceList[i][j].t].ptr[0], object[num].tList[object[num].faceList[i][j].t].ptr[1]);
+				glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
+				glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);
+				break;
+			case 3:
+				glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
+				glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);
+				break;
+			}
+				
 		}
 		glEnd();
 	}
@@ -214,9 +237,13 @@ void LoadTexture(char* pFilename, int iIndex)
 	glBindTexture(GL_TEXTURE_2D, texObject[iIndex]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                     GL_REPEAT );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                     GL_REPEAT );
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, iWidth, iHeight,
 		0, GL_BGRA, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(p32BitsImage));
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	FreeImage_Unload(p32BitsImage);
 	FreeImage_Unload(pImage);
@@ -240,7 +267,7 @@ void setTex()
 						glTranslatef(scene1->object_scene[x].Tx, scene1->object_scene[x].Ty, scene1->object_scene[x].Tz);
 						glRotatef(scene1->object_scene[x].Angle, scene1->object_scene[x].Rx, scene1->object_scene[x].Ry, scene1->object_scene[x].Rz);
 						glScalef(scene1->object_scene[x].Sx, scene1->object_scene[x].Sy, scene1->object_scene[x].Sz);
-						material(x);
+						material(x, 0);
 					glPopMatrix();
 				}
 				else
@@ -253,23 +280,29 @@ void setTex()
 		{
 			cout << scene1->texObjectName[j].type << ":";
 			type = scene1->object_scene[i].type;
-			float params1[] = {1.0 , 0.0 , 0.0 ,0.0};
-			float params2[] = {0.0 , 1.0 , 0.0 ,0.0};
-			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-			glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
-			glTexGenfv(GL_S , GL_OBJECT_PLANE , params1);
-			glTexGenfv(GL_T , GL_OBJECT_PLANE , params2);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1);
-			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-			glEnable(GL_TEXTURE_GEN_S);
-			glEnable(GL_TEXTURE_GEN_T);
-			glEnable(GL_ALPHA_TEST);
-			glAlphaFunc(GL_GREATER, 0.5f);
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, texObject[k]);
-			glDisable(GL_CULL_FACE);
+			if(!strcmp(scene1->texObjectName[j].texName, "skybox2048x2048.bmp"))
+			{
+				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);	//effect cube (?)
+
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.5f);
+				glEnable(GL_TEXTURE_2D);
+				
+				glBindTexture(GL_TEXTURE_2D, texObject[k]);
+				glDisable(GL_CULL_FACE);
+
+			}
+			else
+			{
+				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+				glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER, 0.5f);
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, texObject[k]);
+				glDisable(GL_CULL_FACE);
+			}
+			
 			
 			for(int x = i; x < scene1->objectNumMax; x++, i++)
 			{
@@ -280,27 +313,16 @@ void setTex()
 						glTranslatef(scene1->object_scene[x].Tx, scene1->object_scene[x].Ty, scene1->object_scene[x].Tz);
 						glRotatef(scene1->object_scene[x].Angle, scene1->object_scene[x].Rx, scene1->object_scene[x].Ry, scene1->object_scene[x].Rz);
 						glScalef(scene1->object_scene[x].Sx, scene1->object_scene[x].Sy, scene1->object_scene[x].Sz);
-						material(x);
+						material(x, 1);
 					glPopMatrix();
 				}
 				else
 					break;
 			}
 			cout << endl;
-			/*glBegin(GL_QUADS);
-				glTexCoord2f(0.0, 0.0);
-				glVertex3f(-50.0, 0.0, 0.0);
-				glTexCoord2f(1.0, 0.0);
-				glVertex3f(-50.0, 0.0, 100.0);
-				glTexCoord2f(1.0, 1.0);
-				glVertex3f(50.0, 0.0, 100.0);
-				glTexCoord2f(0.0, 1.0);
-				glVertex3f(50.0, 0.0, 0.0);
-			glEnd();*/
-			glDisable(GL_TEXTURE_GEN_S);
-			glDisable(GL_TEXTURE_GEN_T);
 			glDisable(GL_TEXTURE_2D);
 			glDisable(GL_ALPHA_TEST);
+
 			k++;
 		}
 		else if(!strcmp(scene1->texObjectName[j].type, "multi-texture"))
@@ -309,34 +331,25 @@ void setTex()
 			type = scene1->object_scene[i].type;
 			//bind texture 0
 			glActiveTexture(GL_TEXTURE0);
+
+
+
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texObject[k]);
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
 			glTexEnvf (GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE );
 
+
 			//bind texture 1
 			glActiveTexture(GL_TEXTURE1);
+
+
+
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texObject[k+1]);
 			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
 			glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE );
-			/*glBegin(GL_QUADS);
-				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 0.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 0.0);
-				glVertex3f(-1.0, -1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 0.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 0.0);
-				glVertex3f(1.0, -1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 100.0, 100.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 3.0, 3.0);
-				glVertex3f(1.0, 1.0, 0.0);
-	
-				glMultiTexCoord2f(GL_TEXTURE0, 0.0, 100.0);
-				glMultiTexCoord2f(GL_TEXTURE1, 0.0, 3.0);
-				glVertex3f(-1.0, 1.0, 0.0);*/
-			glEnd();
+
 			for(int x = i; x < scene1->objectNumMax; x++, i++)
 			{
 				if(scene1->object_scene[x].type == type)
@@ -346,7 +359,7 @@ void setTex()
 						glTranslatef(scene1->object_scene[x].Tx, scene1->object_scene[x].Ty, scene1->object_scene[x].Tz);
 						glRotatef(scene1->object_scene[x].Angle, scene1->object_scene[x].Rx, scene1->object_scene[x].Ry, scene1->object_scene[x].Rz);
 						glScalef(scene1->object_scene[x].Sx, scene1->object_scene[x].Sy, scene1->object_scene[x].Sz);
-						material(x);
+						material(x, 2);
 					glPopMatrix();
 				}
 				else
@@ -391,7 +404,7 @@ void setTex()
 						glTranslatef(scene1->object_scene[x].Tx, scene1->object_scene[x].Ty, scene1->object_scene[x].Tz);
 						glRotatef(scene1->object_scene[x].Angle, scene1->object_scene[x].Rx, scene1->object_scene[x].Ry, scene1->object_scene[x].Rz);
 						glScalef(scene1->object_scene[x].Sx, scene1->object_scene[x].Sy, scene1->object_scene[x].Sz);
-						material(x);
+						material(x, 3);
 					glPopMatrix();
 				}
 				else

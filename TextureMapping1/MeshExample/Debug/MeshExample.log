@@ -1,4 +1,4 @@
-﻿已經開始建置於 2015/2/4 下午 04:49:42。
+﻿已經開始建置於 2015/2/16 下午 02:35:43。
      1>節點 2 (build 目標) 上的專案 "D:\交大\MeshExample\OpenGL\TextureMapping1\MeshExample\MeshExample.vcxproj"。
      1>InitializeBuildStatus:
          由於指定了 "AlwaysCreate"，因此正在建立 "Debug\MeshExample.unsuccessfulbuild"。
@@ -28,4 +28,4 @@
 
 建置成功。
 
-經過時間 00:00:01.27
+經過時間 00:00:01.30

@@ -1,4 +1,4 @@
-﻿已經開始建置於 2015/2/15 下午 08:59:21。
+﻿已經開始建置於 2015/2/16 下午 02:36:48。
      1>節點 2 (build 目標) 上的專案 "D:\交大\MeshExample\OpenGL\tex2\tex2\tex2.vcxproj"。
      1>InitializeBuildStatus:
          由於指定了 "AlwaysCreate"，因此正在建立 "Debug\tex2.unsuccessfulbuild"。
@@ -23,4 +23,4 @@
 
 建置成功。
 
-經過時間 00:00:01.14
+經過時間 00:00:01.21
