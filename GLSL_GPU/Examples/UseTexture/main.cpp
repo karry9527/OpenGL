@@ -125,13 +125,21 @@ void Display()
 	glBindTexture(GL_TEXTURE_2D, texObject[0]);
 	
 
-	glActiveTexture( GL_TEXTURE1 );
-	glBindTexture(GL_TEXTURE_2D, texObject[1]);
+
 	GLint location = glGetUniformLocation(MyShader, "colorTexture");
 	if(location == -1)
 		printf("Cant find texture name: colorTexture\n");
 	else
-		glUniform1i(location, 1);
+		glUniform1i(location, 0);
+
+	glActiveTexture( GL_TEXTURE1 );
+	glBindTexture(GL_TEXTURE_2D, texObject[1]);
+
+	GLint location1 = glGetUniformLocation(MyShader, "heightTexture");
+	if(location1 == -1)
+		printf("Cant find texture name: heightTexture\n");
+	else
+		glUniform1i(location1, 1);
 	/*varying vec3 vertex_position;
 varying vec3 vertex_light_vector;
 varying vec3 vertex_light_half_vector;
