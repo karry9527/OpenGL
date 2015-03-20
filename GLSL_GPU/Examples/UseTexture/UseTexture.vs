@@ -7,8 +7,13 @@ void main()
 	//a.x = a.x*0.5;
 	//gl_Position = gl_ModelViewProjectionMatrix * a;
 	gl_TexCoord[0].xy = gl_MultiTexCoord0.xy ;
+
+	
+	vec3 hei_tex = texture2D(heightTexture, gl_TexCoord[0].xy).rbg;
+	hei_tex *= 2;
+
 	//a = a + texture2D(heightTexture, gl_TexCoord[0].xy) * vec4(gl_Normal, 0) ;
-	a = a + vec4 (texture2D(heightTexture, gl_TexCoord[0].xy).rbg * gl_Normal, 0) ;
+	a = a + vec4 (hei_tex  * gl_Normal, 0) ;
 	//a = a + texture2D(heightTexture, gl_TexCoord[0].xy);
 	gl_Vertex = a;
 	gl_Position = ftransform();	
