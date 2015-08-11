@@ -1,11 +1,13 @@
-﻿已經開始建置於 2015/3/20 下午 02:55:31。
+﻿已經開始建置於 2015/5/3 下午 05:00:42。
      1>節點 2 (build 目標) 上的專案 "D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\UseTexture.vcxproj"。
      1>InitializeBuildStatus:
-         由於指定了 "AlwaysCreate"，因此正在建立 "Debug\UseTexture.unsuccessfulbuild"。
+         正在變更時間戳記 "Debug\UseTexture.unsuccessfulbuild"。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt shadowMapMain.cpp
+         shadowMapMain.cpp
      1>d:\交大\meshexample\opengl\glsl_gpu\include\freeimage.h : warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失
+     1>d:\交大\meshexample\opengl\glsl_gpu\examples\usetexture\shadowmapmain.cpp(33): warning C4129: 'G' : 無法辨識的字元逸出序列
+     1>d:\交大\meshexample\opengl\glsl_gpu\examples\usetexture\shadowmapmain.cpp(34): warning C4129: 'S' : 無法辨識的字元逸出序列
        ManifestResourceCompile:
          所有輸出都是最新的。
        Link:
@@ -16,18 +18,27 @@
          Debug\ShaderLoader.obj
          Debug\view.obj
          Debug\main.obj
+         Debug\shadowMapMain.obj
          "D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\Debug\SharedCode.lib"
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\UseTexture.exe.embed.manifest" /manifest Debug\UseTexture.exe.intermediate.manifest
-         所有輸出都是最新的。
-       LinkEmbedManifest:
-         所有輸出都是最新的。
-         UseTexture.vcxproj -> D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\Debug\UseTexture.exe
-       FinalizeBuildStatus:
-         正在刪除檔案 "Debug\UseTexture.unsuccessfulbuild"。
-         正在變更時間戳記 "Debug\UseTexture.lastbuildstate"。
-     1>專案 "D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\UseTexture.vcxproj" (build 目標) 建置完成。
+     1>shadowMapMain.obj : error LNK2005: _main 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "unsigned int __cdecl LoadTexture(char const *,int)" (?LoadTexture@@YAIPBDH@Z) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "void __cdecl LoadShaders(void)" (?LoadShaders@@YAXXZ) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "void __cdecl Display(void)" (?Display@@YAXXZ) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "void __cdecl keyboard(unsigned char,int,int)" (?keyboard@@YAXEHH@Z) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "void __cdecl Reshape(int,int)" (?Reshape@@YAXHH@Z) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "class light * light1" (?light1@@3PAVlight@@A) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "unsigned int * texObject" (?texObject@@3PAIA) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "class scene * scene1" (?scene1@@3PAVscene@@A) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "int WinW" (?WinW@@3HA) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "class mesh * object1" (?object1@@3PAVmesh@@A) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "class view * view1" (?view1@@3PAVview@@A) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "class mesh * object2" (?object2@@3PAVmesh@@A) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "int WinH" (?WinH@@3HA) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "unsigned int MyShader" (?MyShader@@3IA) 已在 main.obj 中定義過了
+     1>shadowMapMain.obj : error LNK2005: "int object_num" (?object_num@@3HA) 已在 main.obj 中定義過了
+     1>D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\Debug\UseTexture.exe : fatal error LNK1169: 找到有一或多個已定義的符號
+     1>專案 "D:\交大\MeshExample\OpenGL\GLSL_GPU\Examples\UseTexture\UseTexture.vcxproj" (build 目標) 建置完成 -- 失敗。
 
-建置成功。
+建置失敗。
 
-經過時間 00:00:01.51
+經過時間 00:00:01.22

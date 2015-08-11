@@ -143,8 +143,9 @@ void material(int num, int type)
 				break;
 
 			case 1:
-				glTexCoord2fv(object[num].tList[object[num].faceList[i][j].t].ptr);
 				glNormal3fv(object[num].nList[object[num].faceList[i][j].n].ptr);
+				glTexCoord2fv(object[num].tList[object[num].faceList[i][j].t].ptr);
+				
 				glVertex3fv(object[num].vList[object[num].faceList[i][j].v].ptr);
 				break;
 			case 2:

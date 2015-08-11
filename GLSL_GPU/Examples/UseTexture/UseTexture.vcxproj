@@ -92,6 +92,7 @@
     <ClCompile Include="..\..\SharedCode\ShaderLoader.cpp" />
     <ClCompile Include="..\..\SharedCode\view.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="shadowMapMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UseTexture.fs" />

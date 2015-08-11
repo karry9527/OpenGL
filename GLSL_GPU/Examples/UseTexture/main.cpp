@@ -15,20 +15,23 @@
 #define		TEX_NUM 2	  //the number of textures you use.
 GLuint		texObject[TEX_NUM];	//texture object
 GLhandleARB	MyShader;
-mesh*		object;
+mesh			*object1, *object2;
 light*		light1;
 view*		view1;
 scene		*scene1, *scene2;
 int			WinW,WinH;
+int			object_num = 1;
 
 unsigned int LoadTexture(const char* filename, int iTextureId);
 void LoadShaders();
 void Display();
+void keyboard(unsigned char key, int x, int y);
 void Reshape(GLsizei , GLsizei );
 
 int main(int argc, char** argv)
 {
-	object = new mesh("HighResolutionSphere.obj");
+	object1 = new mesh("HighResolutionSphere.obj");
+	object2 = new mesh("LowResolutionSphere.obj");
 
 	view1 = new view("HW2.view");
 	light1 = new light("HW2.light");
@@ -52,6 +55,7 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
+    glutKeyboardFunc(keyboard);
 	glutMainLoop();
 
 	return 0;
@@ -135,32 +139,66 @@ void Display()
 	glActiveTexture( GL_TEXTURE1 );
 	glBindTexture(GL_TEXTURE_2D, texObject[1]);
 
+	// bump map test
+
 	GLint location1 = glGetUniformLocation(MyShader, "heightTexture");
 	if(location1 == -1)
 		printf("Cant find texture name: heightTexture\n");
+	/*GLint location1 = glGetUniformLocation(MyShader, "normal_texture");
+	if(location1 == -1)
+		printf("Cant find texture name: normal_texture\n");*/
 	else
 		glUniform1i(location1, 1);
-	/*varying vec3 vertex_position;
-varying vec3 vertex_light_vector;
-varying vec3 vertex_light_half_vector;
-varying vec3 vertex_normal;
- 
-uniform sampler2D displacement_texture;
-	glTexCoord[0].xy = glMultiTexCoord0.xy;
-	gl_Position = ftransform();*/	
-	for (size_t i=0;i < object->fTotal;i++)
-	{
-		glBegin(GL_POLYGON);
-		for (size_t j=0;j<3;j++)
-		{
-			glMultiTexCoord2fv(GL_TEXTURE0,	object->tList[object->faceList[i][j].t].ptr);
-			glNormal3fv(object->nList[object->faceList[i][j].n].ptr);
-			glVertex3fv(object->vList[object->faceList[i][j].v].ptr);	
-		}
-		glEnd();
-	}
 
+	GLint location2 = glGetUniformLocation(MyShader, "control");
+	if(location2 == -1)
+		printf("Cant find texture name : control");
+	else
+		glUniform1i(location2, object_num);
+
+	if(object_num == 1)
+	{
+		for (size_t i=0;i < object1->fTotal;i++)
+		{
+			glBegin(GL_POLYGON);
+			for (size_t j=0;j<3;j++)
+			{
+				glMultiTexCoord2fv(GL_TEXTURE0,	object1->tList[object1->faceList[i][j].t].ptr);
+				glNormal3fv(object1->nList[object1->faceList[i][j].n].ptr);
+				glVertex3fv(object1->vList[object1->faceList[i][j].v].ptr);	
+			}
+			glEnd();
+		}
+	}
+	else if(object_num == 2)
+	{
+		for (size_t i=0;i < object2->fTotal;i++)
+		{
+			glBegin(GL_POLYGON);
+			for (size_t j=0;j<3;j++)
+			{
+				glMultiTexCoord2fv(GL_TEXTURE0,	object2->tList[object2->faceList[i][j].t].ptr);
+				glNormal3fv(object2->nList[object2->faceList[i][j].n].ptr);
+				glVertex3fv(object2->vList[object2->faceList[i][j].v].ptr);	
+			}
+			glEnd();
+		}
+	}
 	glutSwapBuffers();
+	glutPostRedisplay();
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+    switch(key)
+    {
+		case 'w':	view1->eye[2] -= 10;break;//eye往前
+        case 'a':	view1->eye[0] -= 10;break;//eye往左
+        case 's':	view1->eye[2] += 10;break;//eye往後
+        case 'd':	view1->eye[0] += 10;break;//eye往右
+		case '1':	object_num = 1;break;
+		case '2':	object_num = 2;break;
+    }
 	glutPostRedisplay();
 }
 

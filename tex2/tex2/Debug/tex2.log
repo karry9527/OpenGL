@@ -1,21 +1,12 @@
-﻿已經開始建置於 2015/2/16 下午 02:36:48。
+﻿已經開始建置於 2015/8/11 下午 02:12:43。
      1>節點 2 (build 目標) 上的專案 "D:\交大\MeshExample\OpenGL\tex2\tex2\tex2.vcxproj"。
      1>InitializeBuildStatus:
          由於指定了 "AlwaysCreate"，因此正在建立 "Debug\tex2.unsuccessfulbuild"。
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>d:\交大\meshexample\opengl\tex2\tex2\freeimage.h : warning C4819: 檔案含有無法在目前字碼頁 (950) 中表示的字元。請以 Unicode 格式儲存檔案以防止資料遺失
+         所有輸出都是最新的。
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.exe" /NOLOGO /LIBPATH:"D:\交大\MeshExample\OpenGL\tex2\tex2\lib" FreeImage.lib glew32.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\tex2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.lib" /MACHINE:X86 Debug\light.obj
-         Debug\main.obj
-         Debug\mesh.obj
-         Debug\scene.obj
-         Debug\view.obj
-         LINK : 最後的累加連結找不到或未建置 D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.exe，正在執行完整連結
+         所有輸出都是最新的。
          tex2.vcxproj -> D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\交大\MeshExample\OpenGL\tex2\Debug\tex2.exe;#1" /manifest Debug\tex2.exe.intermediate.manifest
        FinalizeBuildStatus:
          正在刪除檔案 "Debug\tex2.unsuccessfulbuild"。
          正在變更時間戳記 "Debug\tex2.lastbuildstate"。
@@ -23,4 +14,4 @@
 
 建置成功。
 
-經過時間 00:00:01.21
+經過時間 00:00:00.11
