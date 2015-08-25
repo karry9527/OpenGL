@@ -164,6 +164,20 @@ void Display()
 	
 	for (size_t i=0;i < object1->fTotal;i++)
 	{
+		int lastMaterial = -1;
+		// set material property if this face used different material
+		if(lastMaterial != object1->faceList[i].m)
+		{
+			lastMaterial = (int)object1->faceList[i].m;
+			glMaterialfv(GL_FRONT, GL_AMBIENT  , object1->mList[lastMaterial].Ka);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE  , object1->mList[lastMaterial].Kd);
+			glMaterialfv(GL_FRONT, GL_SPECULAR , object1->mList[lastMaterial].Ks);
+			glMaterialfv(GL_FRONT, GL_SHININESS, &object1->mList[lastMaterial].Ns);
+
+			//you can obtain the texture name by object1->mList[lastMaterial].map_Kd
+			//load them once in the main function before mainloop
+			//bind them in display function here
+		}
 		glBegin(GL_POLYGON);
 		for (size_t j=0;j<3;j++)
 		{
@@ -175,6 +189,20 @@ void Display()
 	}
 	for (size_t i=0;i < object2->fTotal;i++)
 	{
+		int lastMaterial = -1;
+		// set material property if this face used different material
+		if(lastMaterial != object2->faceList[i].m)
+		{
+			lastMaterial = (int)object2->faceList[i].m;
+			glMaterialfv(GL_FRONT, GL_AMBIENT  , object2->mList[lastMaterial].Ka);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE  , object2->mList[lastMaterial].Kd);
+			glMaterialfv(GL_FRONT, GL_SPECULAR , object2->mList[lastMaterial].Ks);
+			glMaterialfv(GL_FRONT, GL_SHININESS, &object2->mList[lastMaterial].Ns);
+
+			//you can obtain the texture name by object2->mList[lastMaterial].map_Kd
+			//load them once in the main function before mainloop
+			//bind them in display function here
+		}
 		glBegin(GL_POLYGON);
 		for (size_t j=0;j<3;j++)
 		{
@@ -187,6 +215,20 @@ void Display()
 
 	for (size_t i=0;i < object3->fTotal;i++)
 	{
+		int lastMaterial = -1;
+		// set material property if this face used different material
+		if(lastMaterial != object3->faceList[i].m)
+		{
+			lastMaterial = (int)object3->faceList[i].m;
+			glMaterialfv(GL_FRONT, GL_AMBIENT  , object3->mList[lastMaterial].Ka);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE  , object3->mList[lastMaterial].Kd);
+			glMaterialfv(GL_FRONT, GL_SPECULAR , object3->mList[lastMaterial].Ks);
+			glMaterialfv(GL_FRONT, GL_SHININESS, &object3->mList[lastMaterial].Ns);
+
+			//you can obtain the texture name by object3->mList[lastMaterial].map_Kd
+			//load them once in the main function before mainloop
+			//bind them in display function here
+		}
 		glBegin(GL_POLYGON);
 		for (size_t j=0;j<3;j++)
 		{
